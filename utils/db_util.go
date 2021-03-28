@@ -2,6 +2,7 @@ package util
 
 import (
 	"database/sql"
+	"os"
 )
 
 func PanicError(err error) {
@@ -10,7 +11,8 @@ func PanicError(err error) {
 	}
 }
 func DBConn() *sql.DB {
-	db, err := sql.Open("mysql", "root:helloworld@tcp(127.0.0.1:6603)/todo")
+	connection_string := os.Getenv("MYSQL_CONNECTION_STRING")
+	db, err := sql.Open("mysql", connection_string)
 	PanicError(err)
 
 	return db
