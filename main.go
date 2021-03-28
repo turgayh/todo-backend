@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"time"
 	"todo-backend/webapi"
 
 	"github.com/gin-contrib/cors"
@@ -19,17 +18,11 @@ func main() {
 
 	log.Print("Starting the grocery app")
 	r := gin.Default()
-	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"},
-		AllowMethods:     []string{"PUT", "PATCH", "GET", "POST"},
-		AllowHeaders:     []string{"Origin"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
-		AllowOriginFunc: func(origin string) bool {
-			return origin == "*"
-		},
-		MaxAge: 12 * time.Hour,
-	}))
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"*", "http://localhost:3000"}
+	// config.AllowOrigins == []string{"http://google.com", "http://facebook.com"}
+
+	r.Use(cors.New(config))
 	webapi.Route(r)
 	r.Run()
 }
