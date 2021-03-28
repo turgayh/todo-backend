@@ -23,7 +23,7 @@ func Create(task models.Task) (int64, error) {
 }
 
 func GetAll() ([]models.Task, error) {
-	var task []models.Task
+	var tasks []models.Task
 	db := util.DBConn()
 	defer db.Close()
 
@@ -34,12 +34,13 @@ func GetAll() ([]models.Task, error) {
 		panic(err)
 	}
 	for rows.Next() {
-		timeline := models.Task{}
-		err = rows.Scan(&timeline.Id, &timeline.Description)
+		task := models.Task{}
+
+		err = rows.Scan(&task.Id, &task.Description, &task.Create_Date)
 		if err != nil {
 			panic(err)
 		}
-		task = append(task, timeline)
+		tasks = append(tasks, task)
 	}
-	return task, nil
+	return tasks, nil
 }
