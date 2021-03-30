@@ -11,7 +11,7 @@ func PanicError(err error) {
 	}
 }
 func DBConn() *sql.DB {
-	connection_string := os.Getenv("MYSQL_CONNECTION_STRING")
+	connection_string := os.Getenv("DATABASE_URL")
 	db, err := sql.Open("mysql", connection_string)
 	PanicError(err)
 
