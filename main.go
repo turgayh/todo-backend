@@ -20,7 +20,6 @@ func main() {
 	r := gin.Default()
 	config := cors.DefaultConfig()
 	config.AllowOrigins = []string{"*", "http://localhost:3000"}
-	// config.AllowOrigins == []string{"http://google.com", "http://facebook.com"}
 
 	r.Use(cors.New(config))
 	webapi.Route(r)
